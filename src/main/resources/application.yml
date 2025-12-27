@@ -1,0 +1,21 @@
+spring.profiles.active: local
+
+server:
+  port: 8081
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: auth-login
+          uri: http://auth-app:9090
+          predicates:
+            - Path=/auth/**
+        - id: well-known
+          uri: http://auth-app:9090
+          predicates:
+            - Path=/.well-known/**
+        - id: managers
+          uri: http://managers:8080
+          predicates:
+            - Path=/api/v1/management/**
